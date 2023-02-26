@@ -22,9 +22,11 @@ body {
   gap: 70px;
 }
 
+/* GAME */
 .game {
   width: 100%;
   max-width: 934px;
+  height: 467px;
 
   display: flex;
   align-items: flex-start;
@@ -33,6 +35,15 @@ body {
 
 .game img {
   width: 400px;
+}
+
+.game .wrapper-word {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .game .choose-word {
@@ -47,35 +58,59 @@ body {
   color: #fff;
 }
 
-.words {
+.game .choosen-word {
+  display: flex;
+  gap: 10px;
+
+  margin-bottom: 27px;
+  margin-right: 10px;
+}
+
+.game .choosen-word p {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 50px;
+  line-height: 68px;
+
+  color: #000;
+}
+
+/* LETTERS */
+.letters {
   display: grid;
   grid-template-columns: repeat(13, 40px);
   gap: 12px;
 }
 
-.word {
+.letter {
   font-size: 16px;
   line-height: 19px;
   text-align: center;
 
   border-radius: 3px;
   border: 1px solid #7aa7c7;
-  background: #9faab5;
-  color: #798a9f;
+  background: #e1ecf4;
+  color: #39739d;
 
   height: 40px;
 }
+
+.letter:disabled {
+  background: #9faab5;
+  color: #798a9f;
+}
+
+/* GENERAL */
 
 button {
   transition: all 0.2s;
 }
 
-.choose-word:hover {
+.choose-word:not([disabled]):hover {
   cursor: pointer;
   opacity: 0.9;
 }
 
-.word:hover {
+.letter:not([disabled]):hover {
   cursor: pointer;
   filter: brightness(0.9);
 }

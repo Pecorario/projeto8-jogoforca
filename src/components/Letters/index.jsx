@@ -1,4 +1,4 @@
-export default function Words() {
+export default function Letters() {
   const alphabet = [
     'a',
     'b',
@@ -28,10 +28,14 @@ export default function Words() {
     'z'
   ];
 
+  // const chosen = [];
+
   return (
-    <div className="words">
-      {alphabet.map(word => (
-        <button className="word">{word.toUpperCase()}</button>
+    <div className="letters">
+      {alphabet.map(letter => (
+        <button key={letter} className="letter" disabled>
+          {letter.toUpperCase()}
+        </button>
       ))}
     </div>
   );
