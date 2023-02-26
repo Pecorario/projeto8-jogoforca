@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { GlobalStyle } from './styles/global';
 
+import { GlobalStyle } from './styles/global';
 import * as S from './styles/style';
 
 import palavras from './palavras.js';
@@ -17,9 +17,7 @@ import forca5 from './assets/forca5.png';
 import forca6 from './assets/forca6.png';
 
 export default function App() {
-  const [chosenWord, setChosenWord] = useState('');
-  const [arrChosenWord, setArrChosenWord] = useState([]);
-  const [hiddenWord, setHiddenWord] = useState([]);
+  const [chosenWord, setChosenWord] = useState([]);
   const [chosenLetters, setChosenLetters] = useState([]);
   const [step, setStep] = useState(0);
 
@@ -29,8 +27,6 @@ export default function App() {
 
   function resetGame() {
     setStep(0);
-    setHiddenWord([]);
-    setArrChosenWord([]);
     setChosenLetters([]);
     setChosenWord('');
     setDidYouWin(false);
@@ -38,12 +34,7 @@ export default function App() {
     setFinishedGame(false);
   }
 
-  function showWord(arr) {
-    arrChosenWord.map((item, idx) => (arr[idx] = item));
-  }
-
   function lostGame(arr) {
-    showWord(arr);
     setDidYouLose(true);
     setFinishedGame(true);
   }
@@ -51,14 +42,6 @@ export default function App() {
   function wonGame() {
     setDidYouWin(true);
     setFinishedGame(true);
-  }
-
-  function handleHiddenChosenWord(word) {
-    const auxArrChosenWord = word.split('');
-    const auxArrHiddenWord = new Array(auxArrChosenWord.length).fill('_');
-
-    setArrChosenWord(auxArrChosenWord);
-    setHiddenWord(auxArrHiddenWord);
   }
 
   function getStepImage() {
@@ -94,39 +77,39 @@ export default function App() {
     const sizeOfArr = palavras.length;
     const chooseNumber = getRandomInt(0, sizeOfArr);
 
-    setChosenWord(palavras[chooseNumber]);
-    handleHiddenChosenWord(palavras[chooseNumber]);
+    setChosenWord(palavras[chooseNumber].split(''));
   }
 
-  function showRightLetter(arr, letter) {
-    arrChosenWord.map((item, idx) => {
-      if (item === letter) {
-        return (arr[idx] = letter);
-      }
-      return item;
-    });
+  function verifyAllLettersAreDiscovered(letter) {
+    const auxArr = [...chosenLetters, letter];
+    const lettersWrong = chosenWord.filter(item => !auxArr.includes(item));
+
+    if (lettersWrong.length === 0) {
+      return true;
+    }
+
+    return false;
   }
 
   function handleClickLetter(letter) {
     if (step < 6) {
-      const auxArr = [...hiddenWord];
+      let rightWord = false;
 
-      if (arrChosenWord.includes(letter)) {
-        showRightLetter(auxArr, letter);
+      if (chosenWord.includes(letter)) {
+        rightWord = verifyAllLettersAreDiscovered(letter);
       } else {
         setStep(step + 1);
 
         if (step === 5) {
-          lostGame(auxArr);
+          lostGame();
         }
       }
 
-      if (!auxArr.includes('_')) {
+      if (rightWord) {
         wonGame();
       }
 
       setChosenLetters(prevState => [...prevState, letter]);
-      setHiddenWord(auxArr);
     }
   }
 
@@ -135,7 +118,8 @@ export default function App() {
       <S.Container>
         <Game
           handleChooseWord={handleChooseWord}
-          chosenWord={hiddenWord}
+          chosenWord={chosenWord}
+          chosenLetters={chosenLetters}
           stepImage={getStepImage()}
           didYouLose={didYouLose}
           didYouWin={didYouWin}

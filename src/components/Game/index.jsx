@@ -5,8 +5,17 @@ export default function Game({
   chosenWord,
   stepImage,
   didYouLose,
-  didYouWin
+  didYouWin,
+  chosenLetters
 }) {
+  function showRightChar(letter) {
+    if (chosenLetters.includes(letter) || didYouWin || didYouLose) {
+      return letter;
+    } else {
+      return '_';
+    }
+  }
+
   return (
     <S.WrapperGame>
       <img src={stepImage} alt="Imagem da forca " data-test="game-image" />
@@ -24,7 +33,7 @@ export default function Game({
               didYouWin={didYouWin}
               data-test="word"
             >
-              {letter}
+              {showRightChar(letter)}
             </S.Word>
           ))}
         </S.ChoosenWord>
