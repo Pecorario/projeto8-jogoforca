@@ -7,6 +7,7 @@ import palavras from './palavras.js';
 
 import Game from './components/Game';
 import Letters from './components/Letters';
+import Guess from './components/Guess';
 
 import forca0 from './assets/forca0.png';
 import forca1 from './assets/forca1.png';
@@ -25,6 +26,8 @@ export default function App() {
   const [didYouWin, setDidYouWin] = useState(false);
   const [finishedGame, setFinishedGame] = useState(false);
 
+  const [guessWord, setGuessWord] = useState('');
+
   function resetGame() {
     setStep(0);
     setChosenLetters([]);
@@ -34,7 +37,7 @@ export default function App() {
     setFinishedGame(false);
   }
 
-  function lostGame(arr) {
+  function lostGame() {
     setDidYouLose(true);
     setFinishedGame(true);
   }
@@ -113,22 +116,40 @@ export default function App() {
     }
   }
 
+  function handleGuess() {
+    const word = chosenWord.join('');
+
+    if (word === guessWord) {
+      wonGame();
+    } else {
+      setStep(6);
+      lostGame();
+    }
+  }
+
   return (
     <>
       <S.Container>
         <Game
-          handleChooseWord={handleChooseWord}
           chosenWord={chosenWord}
           chosenLetters={chosenLetters}
-          stepImage={getStepImage()}
           didYouLose={didYouLose}
           didYouWin={didYouWin}
+          stepImage={getStepImage()}
+          handleChooseWord={handleChooseWord}
         />
         <Letters
           startedGame={chosenWord.length !== 0}
           finishedGame={finishedGame}
           chosenLetters={chosenLetters}
           handleClickLetter={handleClickLetter}
+        />
+        <Guess
+          guessWord={guessWord}
+          setGuessWord={setGuessWord}
+          startedGame={chosenWord.length !== 0}
+          finishedGame={finishedGame}
+          handleGuess={handleGuess}
         />
       </S.Container>
       <GlobalStyle />

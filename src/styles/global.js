@@ -19,7 +19,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100vh;
   }
 
-  *, body, button {
+  *, body, button, label {
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
   }
