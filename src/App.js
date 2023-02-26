@@ -20,6 +20,8 @@ import forca6 from './assets/forca6.png';
 export default function App() {
   const [chosenWord, setChosenWord] = useState([]);
   const [chosenLetters, setChosenLetters] = useState([]);
+  const [hiddenWord, setHiddenWord] = useState([]);
+  const [word, setWord] = useState('');
   const [step, setStep] = useState(0);
 
   const [didYouLose, setDidYouLose] = useState(false);
@@ -28,16 +30,30 @@ export default function App() {
 
   const [guessWord, setGuessWord] = useState('');
 
+  function getWordString(arr) {
+    let oldWord = arr.join('');
+    oldWord = oldWord.replace(/()+/g, ' ');
+
+    setWord(oldWord);
+  }
+
   function resetGame() {
     setStep(0);
     setChosenLetters([]);
-    setChosenWord('');
+    setHiddenWord([]);
+
+    setChosenWord([]);
     setDidYouWin(false);
     setDidYouLose(false);
     setFinishedGame(false);
   }
 
-  function lostGame() {
+  function showWord(arr) {
+    chosenWord.map((item, idx) => (arr[idx] = item));
+  }
+
+  function lostGame(arr) {
+    showWord(arr);
     setDidYouLose(true);
     setFinishedGame(true);
   }
@@ -79,40 +95,44 @@ export default function App() {
 
     const sizeOfArr = palavras.length;
     const chooseNumber = getRandomInt(0, sizeOfArr);
+    const chosenWordArr = palavras[chooseNumber].split('');
+    const auxArrHiddenWord = new Array(chosenWordArr.length).fill('_');
 
-    setChosenWord(palavras[chooseNumber].split(''));
+    setHiddenWord(auxArrHiddenWord);
+    setChosenWord(chosenWordArr);
+    getWordString(auxArrHiddenWord);
   }
 
-  function verifyAllLettersAreDiscovered(letter) {
-    const auxArr = [...chosenLetters, letter];
-    const lettersWrong = chosenWord.filter(item => !auxArr.includes(item));
-
-    if (lettersWrong.length === 0) {
-      return true;
-    }
-
-    return false;
+  function showRightLetter(arr, letter) {
+    chosenWord.map((item, idx) => {
+      if (item === letter) {
+        return (arr[idx] = letter);
+      }
+      return item;
+    });
   }
 
   function handleClickLetter(letter) {
     if (step < 6) {
-      let rightWord = false;
+      const auxArr = [...hiddenWord];
 
       if (chosenWord.includes(letter)) {
-        rightWord = verifyAllLettersAreDiscovered(letter);
+        showRightLetter(auxArr, letter);
       } else {
         setStep(step + 1);
 
         if (step === 5) {
-          lostGame();
+          lostGame(auxArr);
         }
       }
 
-      if (rightWord) {
+      if (!auxArr.includes('_')) {
         wonGame();
       }
 
       setChosenLetters(prevState => [...prevState, letter]);
+      getWordString(auxArr);
+      setHiddenWord(auxArr);
     }
   }
 
@@ -131,8 +151,7 @@ export default function App() {
     <>
       <S.Container>
         <Game
-          chosenWord={chosenWord}
-          chosenLetters={chosenLetters}
+          word={word}
           didYouLose={didYouLose}
           didYouWin={didYouWin}
           stepImage={getStepImage()}

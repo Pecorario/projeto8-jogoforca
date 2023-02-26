@@ -2,20 +2,11 @@ import * as S from './style';
 
 export default function Game({
   handleChooseWord,
-  chosenWord,
+  word,
   stepImage,
   didYouLose,
-  didYouWin,
-  chosenLetters
+  didYouWin
 }) {
-  function showRightChar(letter) {
-    if (chosenLetters.includes(letter) || didYouWin || didYouLose) {
-      return letter;
-    } else {
-      return '_';
-    }
-  }
-
   return (
     <S.WrapperGame>
       <img src={stepImage} alt="Imagem da forca " data-test="game-image" />
@@ -26,16 +17,13 @@ export default function Game({
         </S.ChooseWord>
 
         <S.ChoosenWord>
-          {chosenWord.map((letter, idx) => (
-            <S.Word
-              key={idx}
-              didYouLose={didYouLose}
-              didYouWin={didYouWin}
-              data-test="word"
-            >
-              {showRightChar(letter)}
-            </S.Word>
-          ))}
+          <S.Word
+            didYouLose={didYouLose}
+            didYouWin={didYouWin}
+            data-test="word"
+          >
+            {word}
+          </S.Word>
         </S.ChoosenWord>
       </S.WrapperWord>
     </S.WrapperGame>

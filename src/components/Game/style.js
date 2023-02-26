@@ -55,7 +55,7 @@ export const Word = styled.p`
   font-size: 50px;
   line-height: 68px;
 
-  color: #000;
+  ${({ didYouWin, didYouLose }) => !didYouWin && !didYouLose && 'color: #000'};
   ${({ didYouWin }) => didYouWin && 'color: #27ae60'};
   ${({ didYouLose }) => didYouLose && 'color: #ff0000'};
 `;
