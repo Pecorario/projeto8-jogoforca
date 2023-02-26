@@ -74,6 +74,14 @@ body {
   color: #000;
 }
 
+.game .choosen-word p.win {
+  color: #27ae60;
+}
+
+.game .choosen-word p.lost {
+  color: #ff0000;
+}
+
 /* LETTERS */
 .letters {
   display: grid;

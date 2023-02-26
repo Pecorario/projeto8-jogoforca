@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import palavras from './palavras.js';
 
@@ -17,7 +17,38 @@ export default function App() {
   const [chosenWord, setChosenWord] = useState('');
   const [arrChosenWord, setArrChosenWord] = useState([]);
   const [hiddenWord, setHiddenWord] = useState([]);
+  const [chosenLetters, setChosenLetters] = useState([]);
   const [step, setStep] = useState(0);
+
+  const [didYouLose, setDidYouLose] = useState(false);
+  const [didYouWin, setDidYouWin] = useState(false);
+  const [finishedGame, setFinishedGame] = useState(false);
+
+  function resetGame() {
+    setStep(0);
+    setHiddenWord([]);
+    setArrChosenWord([]);
+    setChosenLetters([]);
+    setChosenWord('');
+    setDidYouWin(false);
+    setDidYouLose(false);
+    setFinishedGame(false);
+  }
+
+  function showWord(arr) {
+    arrChosenWord.map((item, idx) => (arr[idx] = item));
+  }
+
+  function lostGame(arr) {
+    showWord(arr);
+    setDidYouLose(true);
+    setFinishedGame(true);
+  }
+
+  function wonGame() {
+    setDidYouWin(true);
+    setFinishedGame(true);
+  }
 
   function handleHiddenChosenWord(word) {
     const auxArrChosenWord = word.split('');
@@ -55,10 +86,45 @@ export default function App() {
   }
 
   function handleChooseWord() {
+    resetGame();
+
     const sizeOfArr = palavras.length;
     const chooseNumber = getRandomInt(0, sizeOfArr);
+
     setChosenWord(palavras[chooseNumber]);
     handleHiddenChosenWord(palavras[chooseNumber]);
+  }
+
+  function showRightLetter(arr, letter) {
+    arrChosenWord.map((item, idx) => {
+      if (item === letter) {
+        return (arr[idx] = letter);
+      }
+      return item;
+    });
+  }
+
+  function handleClickLetter(letter) {
+    if (step < 6) {
+      const auxArr = [...hiddenWord];
+
+      if (arrChosenWord.includes(letter)) {
+        showRightLetter(auxArr, letter);
+      } else {
+        setStep(step + 1);
+
+        if (step === 5) {
+          lostGame(auxArr);
+        }
+      }
+
+      if (!auxArr.includes('_')) {
+        wonGame();
+      }
+
+      setChosenLetters(prevState => [...prevState, letter]);
+      setHiddenWord(auxArr);
+    }
   }
 
   return (
@@ -67,8 +133,15 @@ export default function App() {
         handleChooseWord={handleChooseWord}
         chosenWord={hiddenWord}
         stepImage={getStepImage()}
+        didYouLose={didYouLose}
+        didYouWin={didYouWin}
       />
-      <Letters />
+      <Letters
+        startedGame={chosenWord.length !== 0}
+        finishedGame={finishedGame}
+        chosenLetters={chosenLetters}
+        handleClickLetter={handleClickLetter}
+      />
     </div>
   );
 }

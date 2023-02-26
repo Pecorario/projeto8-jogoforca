@@ -1,4 +1,42 @@
-export default function Letters() {
+import { useState } from 'react';
+
+function Letter({
+  letter,
+  startedGame,
+  handleClickLetter,
+  finishedGame,
+  chosenLetters
+}) {
+  function handleGetIsDisabled() {
+    if (startedGame) {
+      if (finishedGame) {
+        return true;
+      } else {
+        return chosenLetters.includes(letter);
+      }
+    } else {
+      return true;
+    }
+  }
+
+  return (
+    <button
+      className="letter"
+      disabled={handleGetIsDisabled()}
+      onClick={() => handleClickLetter(letter)}
+      data-test="letter"
+    >
+      {letter.toUpperCase()}
+    </button>
+  );
+}
+
+export default function Letters({
+  startedGame,
+  handleClickLetter,
+  finishedGame,
+  chosenLetters
+}) {
   const alphabet = [
     'a',
     'b',
@@ -33,9 +71,14 @@ export default function Letters() {
   return (
     <div className="letters">
       {alphabet.map(letter => (
-        <button key={letter} className="letter" disabled>
-          {letter.toUpperCase()}
-        </button>
+        <Letter
+          key={letter}
+          letter={letter}
+          startedGame={startedGame}
+          finishedGame={finishedGame}
+          handleClickLetter={handleClickLetter}
+          chosenLetters={chosenLetters}
+        />
       ))}
     </div>
   );
