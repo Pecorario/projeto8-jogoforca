@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import * as S from './style';
 
 export default function Game({
   handleChooseWord,
@@ -8,30 +8,27 @@ export default function Game({
   didYouWin
 }) {
   return (
-    <div className="game">
+    <S.WrapperGame>
       <img src={stepImage} alt="Imagem da forca " data-test="game-image" />
 
-      <div className="wrapper-word">
-        <button
-          className="choose-word"
-          onClick={handleChooseWord}
-          data-test="choose-word"
-        >
+      <S.WrapperWord>
+        <S.ChooseWord onClick={handleChooseWord} data-test="choose-word">
           Escolher Palavra
-        </button>
+        </S.ChooseWord>
 
-        <div className="choosen-word">
+        <S.ChoosenWord>
           {chosenWord.map((letter, idx) => (
-            <p
+            <S.Word
               key={idx}
-              className={(didYouLose && 'lost') || (didYouWin && 'win') || ''}
+              didYouLose={didYouLose}
+              didYouWin={didYouWin}
               data-test="word"
             >
               {letter}
-            </p>
+            </S.Word>
           ))}
-        </div>
-      </div>
-    </div>
+        </S.ChoosenWord>
+      </S.WrapperWord>
+    </S.WrapperGame>
   );
 }

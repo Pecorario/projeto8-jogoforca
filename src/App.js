@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { GlobalStyle } from './styles/global';
+
+import * as S from './styles/style';
 
 import palavras from './palavras.js';
 
@@ -128,20 +131,23 @@ export default function App() {
   }
 
   return (
-    <div className="container">
-      <Game
-        handleChooseWord={handleChooseWord}
-        chosenWord={hiddenWord}
-        stepImage={getStepImage()}
-        didYouLose={didYouLose}
-        didYouWin={didYouWin}
-      />
-      <Letters
-        startedGame={chosenWord.length !== 0}
-        finishedGame={finishedGame}
-        chosenLetters={chosenLetters}
-        handleClickLetter={handleClickLetter}
-      />
-    </div>
+    <>
+      <S.Container>
+        <Game
+          handleChooseWord={handleChooseWord}
+          chosenWord={hiddenWord}
+          stepImage={getStepImage()}
+          didYouLose={didYouLose}
+          didYouWin={didYouWin}
+        />
+        <Letters
+          startedGame={chosenWord.length !== 0}
+          finishedGame={finishedGame}
+          chosenLetters={chosenLetters}
+          handleClickLetter={handleClickLetter}
+        />
+      </S.Container>
+      <GlobalStyle />
+    </>
   );
 }

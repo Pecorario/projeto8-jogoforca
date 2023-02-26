@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import * as S from './style';
 
 function Letter({
   letter,
@@ -20,14 +20,13 @@ function Letter({
   }
 
   return (
-    <button
-      className="letter"
+    <S.ButtonLetter
       disabled={handleGetIsDisabled()}
       onClick={() => handleClickLetter(letter)}
       data-test="letter"
     >
       {letter.toUpperCase()}
-    </button>
+    </S.ButtonLetter>
   );
 }
 
@@ -66,10 +65,8 @@ export default function Letters({
     'z'
   ];
 
-  // const chosen = [];
-
   return (
-    <div className="letters">
+    <S.WrapperLetters>
       {alphabet.map(letter => (
         <Letter
           key={letter}
@@ -80,6 +77,6 @@ export default function Letters({
           chosenLetters={chosenLetters}
         />
       ))}
-    </div>
+    </S.WrapperLetters>
   );
 }
