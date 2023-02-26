@@ -43,9 +43,6 @@ export const ChooseWord = styled.button`
 `;
 
 export const ChoosenWord = styled.div`
-  display: flex;
-  gap: 10px;
-
   margin-bottom: 27px;
   margin-right: 10px;
 `;

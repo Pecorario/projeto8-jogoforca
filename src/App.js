@@ -50,6 +50,7 @@ export default function App() {
 
   function showWord(arr) {
     chosenWord.map((item, idx) => (arr[idx] = item));
+    getWordString(arr);
   }
 
   function lostGame(arr) {
@@ -58,7 +59,8 @@ export default function App() {
     setFinishedGame(true);
   }
 
-  function wonGame() {
+  function wonGame(arr) {
+    showWord(arr);
     setDidYouWin(true);
     setFinishedGame(true);
   }
@@ -127,7 +129,7 @@ export default function App() {
       }
 
       if (!auxArr.includes('_')) {
-        wonGame();
+        wonGame(auxArr);
       }
 
       setChosenLetters(prevState => [...prevState, letter]);
@@ -137,14 +139,16 @@ export default function App() {
   }
 
   function handleGuess() {
-    const word = chosenWord.join('');
+    const rightWord = chosenWord.join('');
 
-    if (word === guessWord) {
-      wonGame();
+    if (rightWord === guessWord) {
+      wonGame(hiddenWord);
     } else {
       setStep(6);
-      lostGame();
+      lostGame(hiddenWord);
     }
+
+    setGuessWord('');
   }
 
   return (
