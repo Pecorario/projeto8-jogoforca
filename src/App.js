@@ -107,8 +107,8 @@ export default function App() {
 
   function showRightLetter(arr, letter) {
     chosenWord.map((item, idx) => {
-      if (item === letter) {
-        return (arr[idx] = letter);
+      if (item.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === letter) {
+        return (arr[idx] = item);
       }
       return item;
     });
@@ -117,8 +117,12 @@ export default function App() {
   function handleClickLetter(letter) {
     if (step < 6) {
       const auxArr = [...hiddenWord];
+      const formatedArr = chosenWord
+        .join('')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
 
-      if (chosenWord.includes(letter)) {
+      if (formatedArr.includes(letter)) {
         showRightLetter(auxArr, letter);
       } else {
         setStep(step + 1);
