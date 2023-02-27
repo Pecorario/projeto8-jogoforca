@@ -12,9 +12,7 @@ export const Container = styled.div`
   gap: 70px;
 
   @media (max-width: 650px) {
-    padding: 20px;
+    padding: 50px 20px;
     gap: 0;
-
-    justify-content: center;
   }
 `;

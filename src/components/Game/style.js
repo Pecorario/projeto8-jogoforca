@@ -31,12 +31,6 @@ export const WrapperGame = styled.div`
       width: 60%;
     }
   }
-
-  @media (max-width: 400px) {
-    img {
-      width: 80%;
-    }
-  }
 `;
 
 export const WrapperWord = styled.div`

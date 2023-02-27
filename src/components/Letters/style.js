@@ -19,7 +19,7 @@ export const WrapperLetters = styled.div`
 
   @media (max-width: 400px) {
     margin-top: 20px;
-    grid-template-columns: repeat(6, 30px);
+    grid-template-columns: repeat(7, 30px);
   }
 `;
 
