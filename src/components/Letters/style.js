@@ -4,6 +4,23 @@ export const WrapperLetters = styled.div`
   display: grid;
   grid-template-columns: repeat(13, 40px);
   gap: 12px;
+
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(9, 40px);
+  }
+
+  @media (max-width: 650px) {
+    grid-template-columns: repeat(12, 30px);
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(8, 30px);
+  }
+
+  @media (max-width: 400px) {
+    margin-top: 20px;
+    grid-template-columns: repeat(6, 30px);
+  }
 `;
 
 export const ButtonLetter = styled.button`
@@ -28,5 +45,9 @@ export const ButtonLetter = styled.button`
   :not([disabled]):hover {
     cursor: pointer;
     filter: brightness(0.9);
+  }
+
+  @media (max-width: 650px) {
+    height: 30px;
   }
 `;

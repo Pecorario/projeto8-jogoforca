@@ -31,8 +31,7 @@ export default function App() {
   const [guessWord, setGuessWord] = useState('');
 
   function getWordString(arr) {
-    let oldWord = arr.join('');
-    oldWord = oldWord.replace(/()+/g, ' ');
+    let oldWord = arr.join(' ');
 
     setWord(oldWord);
   }
@@ -96,7 +95,7 @@ export default function App() {
     resetGame();
 
     const sizeOfArr = palavras.length;
-    const chooseNumber = getRandomInt(0, sizeOfArr);
+    const chooseNumber = getRandomInt(0, sizeOfArr - 1);
     const chosenWordArr = palavras[chooseNumber].split('');
     const auxArrHiddenWord = new Array(chosenWordArr.length).fill('_');
 
