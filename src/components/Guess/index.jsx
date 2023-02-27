@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import * as S from './style';
 
 export default function Guess({
@@ -7,11 +8,16 @@ export default function Guess({
   startedGame,
   finishedGame
 }) {
+  const [key, setKey] = useState('');
+  const [code, setCode] = useState('');
+
   function handleChange(event) {
     setGuessWord(event.target.value);
   }
 
   function handleSubmit(event) {
+    setKey(event.key);
+    setCode(event.code);
     if (event.key === 'Enter' || event.code === 'Enter') {
       handleGuess();
     }
@@ -38,6 +44,8 @@ export default function Guess({
       >
         Chutar
       </S.Button>
+      <p>key: {key}</p>
+      <p>code: {code}</p>
     </S.WrapperGuess>
   );
 }
