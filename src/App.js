@@ -145,7 +145,7 @@ export default function App() {
     const rightWord = chosenWord.join('');
     e.preventDefault();
 
-    if (rightWord === guessWord) {
+    if (rightWord === guessWord.toLowerCase()) {
       wonGame(hiddenWord);
     } else {
       setStep(6);
