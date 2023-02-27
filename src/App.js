@@ -141,8 +141,9 @@ export default function App() {
     }
   }
 
-  function handleGuess() {
+  function handleGuess(e) {
     const rightWord = chosenWord.join('');
+    e.preventDefault();
 
     if (rightWord === guessWord) {
       wonGame(hiddenWord);

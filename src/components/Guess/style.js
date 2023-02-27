@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const WrapperGuess = styled.div`
+export const WrapperGuess = styled.form`
   width: 100%;
   margin-top: -20px;
   display: flex;
