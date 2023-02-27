@@ -10,6 +10,13 @@ export default function Guess({
   function handleChange(event) {
     setGuessWord(event.target.value);
   }
+
+  function handleSubmit(event) {
+    if (event.key === 'Enter' || event.code === 'Enter') {
+      handleGuess();
+    }
+  }
+
   return (
     <S.WrapperGuess onSubmit={handleGuess}>
       <S.Label htmlFor="guess-input">Já sei a palavra!</S.Label>
@@ -20,6 +27,7 @@ export default function Guess({
         data-test="guess-input"
         value={guessWord}
         onChange={handleChange}
+        onKeyDown={event => handleSubmit(event)}
         disabled={!startedGame || finishedGame}
       />
       <S.Button
